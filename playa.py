@@ -120,3 +120,4 @@ class Player:
         print("Defense: %s" %self.defense)
         
 
+player = Player()

@@ -11,9 +11,7 @@ class Item:
         print("Unusable item. Please report to developer and he'll try to get it fixed :).")
         pass
     
-    def get(self):
-        p(self.msg)
-        main.player.inventory.append(self)
+    
 
 class GuildCard(Item):
     def __init__(self):
@@ -22,5 +20,9 @@ class GuildCard(Item):
     
     def use(self):
         main.player.dispStats()
+    
+    def get(self):
+        p(self.msg)
+        main.player.inventory.append(self)
     
     

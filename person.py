@@ -27,9 +27,9 @@ class ReceptionistKate(Person):
     
     def talk(self):
         imp.reload(main)
+        
         p("%s: Hello, and welcome to the Falaria branch of the Adventurer's Guild. How can I help you today?" %self.name)
-        p(main.player.name + ": Yes, I'd like to register as an adventurer.")
-        p(main.player.name)
+        p("You: Yes, I'd like to register as an adventurer.")
         p("%s: Alrighty then, give me a moment." %self.name)
         p("...", 0.75, 0.75)
 
