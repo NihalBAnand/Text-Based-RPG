@@ -1,4 +1,4 @@
-import main
+from playa import *
 from utils import *
 
 class Item:
@@ -19,10 +19,8 @@ class GuildCard(Item):
         self.msg = "It's a guild card. You can use it to check your status."
     
     def use(self):
-        main.player.dispStats()
+        player.dispStats()
     
     def get(self):
         p(self.msg)
-        main.player.inventory.append(self)
-    
-    
+        player.inventory.append(self)

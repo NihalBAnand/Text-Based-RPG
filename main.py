@@ -45,8 +45,16 @@ while 1:
 
 
 #Pick Name
-p("And, what's your name?")
-player.name = input(">")
+while 1:
+    p("And, what's your name?")
+    player.name = input(">")
+    p("Are you sure? (y/n)")
+    test = input(">").lower()
+    if test == "y":
+        break
+    else:
+        continue
+
 p("Hello, %s!" % player.name)
 
     
