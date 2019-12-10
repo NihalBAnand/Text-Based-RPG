@@ -2,8 +2,10 @@
 import sys
 import time
 from os import system, name
+from playa import *
 
-def p(text="EMPTY PRINT FUNCTION", speed = 0.0, space = 0):
+#If you change it for debugging, the default values are: speed: 0.05, space: 0.25.
+def p(text="EMPTY PRINT FUNCTION", speed = 0.05, space = 0.25):
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
@@ -16,3 +18,4 @@ def clear():
         _ = system('cls')
     else:
         _ = system('clear')
+

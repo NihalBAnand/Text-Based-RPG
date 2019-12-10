@@ -1,7 +1,8 @@
-from utils import *
+import utils
 
 class Player:
     def __init__(self):
+
         self.race = None
         self.job = None
         self.name = "Feff"
@@ -33,6 +34,8 @@ class Player:
         self.stats = [self.maxhp, self.maxmp, self.maxsp, self.strength, self.magic, self.speed, self.defense]
         self.affinities = []
 
+        self.locations = []
+
         self.tempDefense = 0
 
         self.armor = None
@@ -55,7 +58,7 @@ class Player:
                 inp = int(input(">"))
                 break
             except:
-                p("Please type a number.")
+                utils.p("Please type a number.")
                 continue
         if self.inDungeon:
             if   inp == 1: self.Dy += 1
@@ -67,9 +70,12 @@ class Player:
             elif inp == 2: self.OVy -= 1
             elif inp == 3: self.OVx += 1
             elif inp == 4: self.OVx -= 1
+        for loc in self.locations:
+            if self.OVx == loc.x and self.OVy == loc.y:
+                loc.enter()
     
     def levelUp(self):
-        p("Congratulations! You've leveled up! Pick a bonus.")
+        utils.p("Congratulations! You've leveled up! Pick a bonus.")
         while 1:
             print("1. Max health + 10")
             print("2. Mana pool + 10")
@@ -82,7 +88,7 @@ class Player:
                 inp = int(input(">"))
                 break
             except:
-                p("Please input a number.")
+                utils.p("Please input a number.")
         if inp == 1:
             self.maxhp += 10
         elif inp == 2:
@@ -99,6 +105,19 @@ class Player:
             self.defense += 3
         self.race.bonus += self.race.levelUp()
     
+    def dispInv(self):
+        while 1:
+            for i in range(0, len(self.inventory)):
+                print(("%s.) " % str(i + 1)) + self.inventory[i].name)
+            utils.p("What would you like to use? Type 'exit' to quit.")
+            try:
+                inp = int(input(">"))
+                self.inventory[inp - 1].use()
+                break
+            except:
+                break
+            
+
     def dispStats(self):
         #Leveling
         print("Level: %s" %self.lvl)
@@ -118,6 +137,30 @@ class Player:
         print("Magic Power: %s" %self.magic)
         print("Agiity: %s" %self.speed)
         print("Defense: %s" %self.defense)
+    
+    def randomEnc(self):
+        pass
+    
+    def overworld(self):
+        while 1:
+            print("X: " + str(self.OVx))
+            print("Y: " + str(self.OVy))
+            print("1.) Move")
+            print("2.) Open Inventory")
+            print("3.) Look for trouble")
+            try:
+                inp = int(input(">"))
+                if inp == 1: self.move()
+                elif inp == 2: self.dispInv()
+                elif inp == 3: self.randomEnc()
+                else: utils.p("Please enter a number displayed, dummy.")
+            except:
+                utils.p("Please enter a number.")
+
+        
+
+    
+
         
 
 player = Player()

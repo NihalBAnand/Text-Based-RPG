@@ -2,8 +2,10 @@ from utils import *
 from playa import *
 from races import *
 from person import *
+from locations.location import *
 from jobs import *
 from locations.falaria import *
+
 
 #Intro
 clear()
@@ -71,7 +73,12 @@ while 1:
     print("5.) Archer")
     try:
         inp = int(input(">"))
-        break
+        p("Are you sure? (y or n)")
+        inp2 = input(">").lower()
+        if inp2 == "y":
+            break
+        else:
+            continue
     except:
         p("Please type a number.")
 player.job = jobs[inp - 1]
@@ -86,9 +93,8 @@ elif inp == "n":
     p("Too bad, so sad. You probably shouldn't have picked this game. Now, you're going to the town of Falaria. Enjoy yourself!")
 else:
     p("I don't know what you were trying to say, but I'm still annoyed. Now, you're going to the town of Falaria.")
-time.sleep(.5)
-clear()
 time.sleep(3)
+clear()
 
 Falaria().enter()
 

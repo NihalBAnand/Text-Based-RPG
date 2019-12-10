@@ -1,5 +1,6 @@
 from utils import *
 from items import *
+from playa import *
 
 class Person:
     def __init__(self, name="Error", hasItem=False, hasQuest=False, item=None):
@@ -25,7 +26,7 @@ class ReceptionistKate(Person):
     
     def talk(self):
         p("%s: Hello, and welcome to the Falaria branch of the Adventurer's Guild. How can I help you today?" %self.name)
-        p("You: Yes, I'd like to register as an adventurer.")
+        p("%s: Yes, I'd like to register as an adventurer."%player.name)
         p("%s: Alrighty then, give me a moment." %self.name)
         p("...", 0.75, 0.75)
         self.giveItem()
