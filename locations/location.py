@@ -32,7 +32,10 @@ class Location:
                     
                     try:
                         inp2 = int(input(">"))
-                        self.majorB[inp2 - 1].enter()
+                        if not self.majorB[inp2 - 1].entered:
+                            self.majorB[inp2 - 1].enter()
+                        else:
+                            self.majorB[inp2 - 1].enterS()
                         break
                     except:
                         if inp2 == m:

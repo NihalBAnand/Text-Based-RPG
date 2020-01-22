@@ -16,5 +16,10 @@ class Guild(Building):
         p("All different kinds of people gather here, of different races, jobs, and social classes.")
         p("Across the room from you, you can vaguely make out a receptionist waving you over.")
         p("You make your way over, wading through the sea of people.")
+        self.entered = True
         self.receptionist.talk()
+    
+    def enterS(self):
+        p("The Guild is the same as how you left it.")
+        p("Nothing new here.")
 

@@ -5,10 +5,12 @@ from person import *
 from locations.location import *
 from jobs import *
 from locations.falaria import *
+from enemies import *
 
 
 #Intro
 clear()
+
 print("Enter Code")
 code = input(">")
 if code == "end":
@@ -18,6 +20,16 @@ if code == "end":
         player.inventory.append(weapon)
         player.weapons.append(weapon)
     Falaria().enter()
+
+elif code == "battle":
+    player.job = Fighter()
+    player.affinities = player.job.affinities
+    for weapon in player.affinities:
+        player.inventory.append(weapon)
+        player.weapons.append(weapon)
+    player.battle(Zombie())
+    player.overworld()
+
 p("Hello! My name is ������!")
 p("Huh?", space = 0.5)
 p("You couldn't read that?", space = 0.5)

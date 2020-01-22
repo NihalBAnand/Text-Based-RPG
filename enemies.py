@@ -3,7 +3,7 @@ import playa
 import random
 
 class Enemy:
-    def __init__(self, hp, mp, sp, spd, defse, atk, typ, accur):
+    def __init__(self, hp, mp, sp, spd, defse, atk, typ, accur, name="enemy_01"):
         self.hp = hp
         self.mp = mp
         self.sp = sp
@@ -12,6 +12,7 @@ class Enemy:
         self.atk = atk #generally between 10 and 100 based on difficulty
         self.typ = typ #1 - fight, 2 - magic
         self.accur = accur #MAX 256
+        self.name = name
     
     def attack(self):
         agi = random.randint(1, 50)
@@ -26,7 +27,7 @@ class Enemy:
             move = random.randint(1, 5)
             if self.sp > 0 and move > 3:
                 accur = random.randint(0, 256)
-                utils.p("Your foe attempts to strike you with a powerful blow!")
+                utils.p("The %s attempts to strike you with a powerful blow!" % self.name)
                 if accur < self.accur:
                     damage = (self.atk + 1) * random.randint(1, round(self.atk / 4))
                     playa.player.hp -= damage
@@ -37,7 +38,7 @@ class Enemy:
 
             else:
                 accur = random.randint(0, 256)
-                utils.p("Your foe attempts to hit you!")
+                utils.p("The %s attempts to hit you!" %self.name)
                 if accur < self.accur:
                     damage = (self.atk + 1)
                     playa.player.hp -= (self.atk + 1)
@@ -59,4 +60,4 @@ class Enemy:
 
 class Zombie(Enemy):
     def __init__(self):
-        super().__init__(50, 10, 50, 3, 5, 15, 1, 256)
+        super().__init__(50, 10, 50, 3, 5, 15, 1, 125, "Zombie")
