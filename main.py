@@ -9,7 +9,16 @@ from locations.falaria import *
 
 #Intro
 clear()
-p("Hello! My name is !")
+print("Enter Code")
+code = input(">")
+if code == "end":
+    player.job = Fighter()
+    player.affinities = player.job.affinities
+    for weapon in player.affinities:
+        player.inventory.append(weapon)
+        player.weapons.append(weapon)
+    Falaria().enter()
+p("Hello! My name is ������!")
 p("Huh?", space = 0.5)
 p("You couldn't read that?", space = 0.5)
 p("I guess my language is untintelligble to humans.")
@@ -82,6 +91,10 @@ while 1:
     except:
         p("Please type a number.")
 player.job = jobs[inp - 1]
+player.affinities = player.job.affinities
+for weapon in player.affinities:
+    player.inventory.append(weapon)
+    player.weapons.append(weapon)
 
 
 #GO!
@@ -96,6 +109,6 @@ else:
 time.sleep(3)
 clear()
 
-Falaria().enter()
+Falaria().enterF()
 
 

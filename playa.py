@@ -1,4 +1,6 @@
 import utils
+import random
+from enemies import *
 
 class Player:
     def __init__(self):
@@ -7,8 +9,8 @@ class Player:
         self.job = None
         self.name = "Feff"
 
-        self.OVx = 0
-        self.OVy = 0
+        self.OVx = 5
+        self.OVy = 5
         self.Dx = 0
         self.Dy = 0
         self.inDungeon = False
@@ -44,9 +46,13 @@ class Player:
         self.spells = []
         self.inventory = []
     
-    def attack(self, enemy, weapon):
+    def attack(self, enemy, weapon, strong=1):
+
         hasAffin = weapon in self.affinities
-        enemy.hp -= weapon.dmg * ((round(strength / 2)) + 1 + (hasAffin*self.affinityBonus))
+        dmg = weapon.dmg * ((round(self.strength / 2)) + 1 + (hasAffin*self.affinityBonus)) * strong
+        enemy.hp -= dmg
+
+        utils.p("You strike your foe for " + str(dmg) + " damage.")
     
     def move(self):
         while 1:
@@ -110,12 +116,18 @@ class Player:
             for i in range(0, len(self.inventory)):
                 print(("%s.) " % str(i + 1)) + self.inventory[i].name)
             utils.p("What would you like to use? Type 'exit' to quit.")
+            inp = input(">")
+
             try:
-                inp = int(input(">"))
+                inp = int(inp)
+            except:
+                if inp.lower() == "exit": break
+
+            try:
                 self.inventory[inp - 1].use()
                 break
             except:
-                break
+                utils.p("Please type a valid number.")
             
 
     def dispStats(self):
@@ -138,8 +150,18 @@ class Player:
         print("Agiity: %s" %self.speed)
         print("Defense: %s" %self.defense)
     
-    def randomEnc(self):
-        pass
+    def randomEnc(self, lookedF = False):
+        chance = random.randint(0, 100)
+        if lookedF:
+            if chance > 25:
+                self.battle(Zombie())
+            else:
+                print("You didn't find anything to fight.")
+        else:
+            if chance > 60:
+                self.battle(Zombie())
+            else:
+                pass
     
     def overworld(self):
         while 1:
@@ -152,10 +174,97 @@ class Player:
                 inp = int(input(">"))
                 if inp == 1: self.move()
                 elif inp == 2: self.dispInv()
-                elif inp == 3: self.randomEnc()
+                elif inp == 3: self.randomEnc(True)
                 else: utils.p("Please enter a number displayed, dummy.")
             except:
                 utils.p("Please enter a number.")
+    
+    def battle(self, enemy):
+        print("Hello!")
+        while self.hp > 0 and enemy.hp > 0:
+            plySpd = self.speed + random.randint(0, 100)
+            enSpd = enemy.spd + random.randint(0, 100)
+            turn = (plySpd > enSpd)
+            while turn:
+                print("Your Health: " + str(self.hp) + " Stamina: " + str(self.sp) + " Mana Pool: " + str(self.mp))
+                print("Enemy's Health: " + str(enemy.hp))
+                
+                print("1. Normal Attack")
+                print("2. Strong attack")
+                #print("3. Cast a spell")
+                print("3. Use Item")
+                try:
+                    inp = int(input(">"))
+                except:
+                    utils.p("Please type a valid number.")
+                    continue
+                
+                if inp == 1:
+                    while 1:
+                        for i in range(0, len(self.inventory)):
+                            print(("%s.) " % str(i + 1)) + self.weapons[i].name)
+                        utils.p("What weapon would you like to use? Type 'exit' to quit.")
+                        inp = input(">")
+
+                        try:
+                            inp = int(inp)
+                        except:
+                            if inp.lower() == "exit": break
+
+                        try:
+                            self.attack(enemy, self.weapons[inp - 1])
+                            
+                            turn = 0
+                            break
+                        except:
+                            utils.p("Please type a valid number.")
+                elif inp == 2:
+                    if self.sp >= 15:
+                        while 1:
+                            for i in range(0, len(self.inventory)):
+                                print(("%s.) " % str(i + 1)) + self.weapons[i].name)
+                            utils.p("What weapon would you like to use? Type 'exit' to quit.")
+                            inp = input(">")
+
+                            try:
+                                inp = int(inp)
+                            except:
+                                if inp.lower() == "exit": break
+
+                            try:
+                                self.attack(enemy, self.weapons[inp - 1], 2)
+                                self.sp -= 15
+                                turn = 0
+                                break
+                            except:
+                                utils.p("Please type a valid number.")
+                    else:
+                        utils.p("You are too low on stamina!")
+                elif inp == 3:
+                    while 1:
+                        for i in range(0, len(self.inventory)):
+                            print(("%s.) " % str(i + 1)) + self.inventory[i].name)
+                        utils.p("What would you like to use? Type 'exit' to quit.")
+                        inp = input(">")
+
+                        try:
+                            inp = int(inp)
+                        except:
+                            if inp.lower() == "exit": break
+
+                        try:
+                            self.inventory[inp - 1].use()
+                            turn = 0
+                            break
+                        except:
+                            utils.p("Please type a valid number.")
+            enemy.attack()
+            turn = 1
+
+
+
+    
+    
 
         
 

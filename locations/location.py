@@ -8,6 +8,7 @@ class Location:
         self.y = y
         self.majorB = major_locs
         playa.player.locations.append(self)
+        self.playerEntered = False
     
     def look(self):
         while 1:
@@ -49,7 +50,8 @@ class Location:
     def enter(self):
         #Do some entrance dialogue
         self.look()
+        self.playerEntered = True
 
     def exit(self):
-        playa.player.OVy -= 1
+        playa.player.OVx -= 1
         playa.player.overworld()
