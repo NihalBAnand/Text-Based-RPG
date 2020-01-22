@@ -12,9 +12,9 @@ from enemies import *
 clear()
 
 print("Enter Code")
-code = input(">")
+code = input(">").lower()
 if code == "end":
-    player.job = Fighter()
+    player.job = Mage()
     player.affinities = player.job.affinities
     for weapon in player.affinities:
         player.inventory.append(weapon)
@@ -30,16 +30,20 @@ elif code == "battle":
     player.battle(Zombie())
     player.overworld()
 
-p("Hello! My name is ������!")
-p("Huh?", space = 0.5)
-p("You couldn't read that?", space = 0.5)
-p("I guess my language is untintelligble to humans.")
-p("Anyway, I'm a being that you would call a god of some sort.")
-p("But, I would rather call myself a Game Master.")    
-p("...", 0.5, 1)
-p("Well, you don't really exist yet.")
-p("As a special service, I'll allow you to decide what you are.")
-p("Now, you should pick your race.")
+elif code == "skip":
+    pass
+else:
+
+    p("Hello! My name is ������!")
+    p("Huh?", space = 0.5)
+    p("You couldn't read that?", space = 0.5)
+    p("I guess my language is untintelligble to humans.")
+    p("Anyway, I'm a being that you would call a god of some sort.")
+    p("But, I would rather call myself a Game Master.")    
+    p("...", 0.5, 1)
+    p("Well, you don't really exist yet.")
+    p("As a special service, I'll allow you to decide what you are.")
+    p("Now, you should pick your race.")
 
 #Pick Race
 races = [HighElf(), DarkElf(), Dwarf(), HalfOrc(), Aarakocra(), Human(), Lizalfos()]
@@ -61,6 +65,7 @@ while 1:
     inp2 = input(">").lower()
     if inp2 == "y":
         player.race = races[inp - 1]
+        player.race.bonus += player.race.levelUp()
         break
     else:
         continue

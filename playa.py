@@ -184,6 +184,7 @@ class Player:
                 else: utils.p("Please enter a number displayed, dummy.")
             except:
                 utils.p("Please enter a number.")
+                continue
     
     def rest(self):
         utils.p("You set up camp for the day.")
@@ -247,9 +248,7 @@ class Player:
                                     inp = int(inp)
                                 except:
                                     if inp.lower() == "exit": break
-                                    else:
-                                        utils.p("Please type a number.")
-                                        continue
+                                    
 
                                 try:
                                     self.attack(enemy, self.weapons[inp - 1], 2)
@@ -280,6 +279,8 @@ class Player:
                                 utils.p("Please type a valid number.")
             if enemy.hp <= 0:
                 utils.p("Defeated the %s!" %enemy.name)
+                utils.p("Gained %s experience!" %enemy.exp)
+                self.exp += enemy.exp
                 break
             
             enemy.attack()

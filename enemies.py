@@ -3,7 +3,7 @@ import playa
 import random
 
 class Enemy:
-    def __init__(self, hp, mp, sp, spd, defse, atk, typ, accur, name="enemy_01"):
+    def __init__(self, hp, mp, sp, spd, defse, atk, typ, accur, exp, name="enemy_01"):
         self.hp = hp
         self.mp = mp
         self.sp = sp
@@ -13,6 +13,7 @@ class Enemy:
         self.typ = typ #1 - fight, 2 - magic
         self.accur = accur #MAX 256
         self.name = name
+        self.exp = exp
     
     def attack(self):
         agi = random.randint(1, 50)
@@ -60,4 +61,4 @@ class Enemy:
 
 class Zombie(Enemy):
     def __init__(self):
-        super().__init__(50, 10, 50, 3, 5, 15, 1, 125, "Zombie")
+        super().__init__(50, 10, 50, 3, 5, 15, 1, 125, 25, "Zombie")
