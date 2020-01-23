@@ -6,6 +6,7 @@ from locations.location import *
 from jobs import *
 from locations.falaria import *
 from enemies import *
+from items import *
 
 
 #Intro
@@ -14,7 +15,7 @@ clear()
 print("Enter Code")
 code = input(">").lower()
 if code == "end":
-    player.job = Mage()
+    player.job = Fighter()
     player.affinities = player.job.affinities
     for weapon in player.affinities:
         player.inventory.append(weapon)
@@ -22,11 +23,14 @@ if code == "end":
     Falaria().enter()
 
 elif code == "battle":
-    player.job = Fighter()
+    player.job = Mage()
     player.affinities = player.job.affinities
     for weapon in player.affinities:
         player.inventory.append(weapon)
         player.weapons.append(weapon)
+    player.inventory.append(GuildCard())
+    player.race = HighElf()
+    player.maxmp += 10
     player.battle(Zombie())
     player.overworld()
 
@@ -65,7 +69,20 @@ while 1:
     inp2 = input(">").lower()
     if inp2 == "y":
         player.race = races[inp - 1]
-        player.race.bonus += player.race.levelUp()
+        if self.race.name == "Aaracokra":
+            self.speed += round(self.race.levelUp() / 4)
+        elif self.race.name == "Dark Elf":
+            self.magic += round(self.race.levelUp() / 2)
+        elif self.race.name == "High Elf":
+            self.maxmp += self.race.levelUp()
+        elif self.race.name == "Dwarf":
+            self.maxhp += self.race.levelUp()
+        elif self.race.name == "Half-Orc":
+            self.defense += round(self.race.levelUp() / 4)
+        elif self.race.name == "Human":
+            self.maxsp += self.race.levelUp()
+        elif self.race.name == "Lizalfos":
+            self.strength += round(self.race.levelUp() / 2)
         break
     else:
         continue

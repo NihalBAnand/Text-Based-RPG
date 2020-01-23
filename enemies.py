@@ -15,18 +15,18 @@ class Enemy:
         self.name = name
         self.exp = exp
     
-    def attack(self):
+    def attack(self, turn):
         agi = random.randint(1, 50)
         temptype = self.typ
-        if agi > 49:
+        '''if agi > 49:
             if self.typ == 1:
                 temptype = 2
             else:
-                temptype = 1
+                temptype = 1'''
         
         if temptype == 1:
             move = random.randint(1, 5)
-            if self.sp > 0 and move > 3:
+            if self.sp >= 10 and move > 3:
                 accur = random.randint(0, 256)
                 utils.p("The %s attempts to strike you with a powerful blow!" % self.name)
                 if accur < self.accur:
@@ -35,7 +35,8 @@ class Enemy:
                     utils.p("It hits you for %s damage!" %damage)
                 else:
                     utils.p("It strikes the air next to you instead!")
-
+                self.sp -= 10
+                turn = 1
 
             else:
                 accur = random.randint(0, 256)
@@ -46,17 +47,20 @@ class Enemy:
                     utils.p("It hits you for %s damage" %damage)
                 else:
                     utils.p("It strikes the air next to you instead!")
-        elif temptype == 2:
+                turn = 1
+        '''elif temptype == 2:
             move = random.randint(1, 5)
             if self.sp > 0 and move > 3:
                 accur = random.randint(0, 256)
                 if accur < self.accur:
                     playa.player.hp -= (self.atk + 1) * random.randint(round(self.atk / 4))
                 self.sp -= 10
+                turn = 1
             else:
                 accur = random.randint(0, 256)
                 if accur < self.accur:
                     playa.player.hp -= (self.atk + 1)
+                turn = 1'''
             
 
 class Zombie(Enemy):
