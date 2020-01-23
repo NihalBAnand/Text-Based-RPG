@@ -7,6 +7,7 @@ from jobs import *
 from locations.falaria import *
 from enemies import *
 from items import *
+from spells import *
 
 
 #Intro
@@ -29,6 +30,10 @@ elif code == "battle":
         player.inventory.append(weapon)
         player.weapons.append(weapon)
     player.inventory.append(GuildCard())
+    player.spells.append(Fireball())
+    player.spells.append(IceSpear())
+    player.spells.append(LightningBolt())
+    player.inventory.append(Spellbook())
     player.race = HighElf()
     player.maxmp += 10
     player.battle(Zombie())
@@ -69,20 +74,20 @@ while 1:
     inp2 = input(">").lower()
     if inp2 == "y":
         player.race = races[inp - 1]
-        if self.race.name == "Aaracokra":
-            self.speed += round(self.race.levelUp() / 4)
-        elif self.race.name == "Dark Elf":
-            self.magic += round(self.race.levelUp() / 2)
-        elif self.race.name == "High Elf":
-            self.maxmp += self.race.levelUp()
-        elif self.race.name == "Dwarf":
-            self.maxhp += self.race.levelUp()
-        elif self.race.name == "Half-Orc":
-            self.defense += round(self.race.levelUp() / 4)
-        elif self.race.name == "Human":
-            self.maxsp += self.race.levelUp()
-        elif self.race.name == "Lizalfos":
-            self.strength += round(self.race.levelUp() / 2)
+        if player.race.name == "Aaracokra":
+            player.speed += round(player.race.levelUp() / 4)
+        elif player.race.name == "Dark Elf":
+            player.magic += round(player.race.levelUp() / 2)
+        elif player.race.name == "High Elf":
+            player.maxmp += player.race.levelUp()
+        elif player.race.name == "Dwarf":
+            player.maxhp += player.race.levelUp()
+        elif player.race.name == "Half-Orc":
+            player.defense += round(player.race.levelUp() / 4)
+        elif player.race.name == "Human":
+            player.maxsp += player.race.levelUp()
+        elif player.race.name == "Lizalfos":
+            player.strength += round(player.race.levelUp() / 2)
         break
     else:
         continue
@@ -129,6 +134,11 @@ player.affinities = player.job.affinities
 for weapon in player.affinities:
     player.inventory.append(weapon)
     player.weapons.append(weapon)
+if inp == 4:
+    player.spells.append(Fireball())
+    player.spells.append(IceSpear())
+    player.spells.append(LightningBolt())
+    player.inventory.append(Spellbook()) 
 
 
 #GO!

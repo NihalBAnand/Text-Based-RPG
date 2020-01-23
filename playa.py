@@ -226,13 +226,13 @@ class Player:
         while self.hp > 0 and enemy.hp > 0:
             
             while 1:
-                print("Your Health: " + str(self.hp) + " Stamina: " + str(self.sp) + " Mana Pool: " + str(self.mp))
+                print("Your Health: " + str(self.hp) + " Stamina: " + str(self.sp) + " Mana: " + str(self.mp))
                 print("%s's Health: "%enemy.name + str(enemy.hp))
                 
                 print("1. Normal Attack")
                 print("2. Strong attack")
-                #print("3. Cast a spell")
-                print("3. Use Item")
+                print("3. Cast a spell")
+                print("4. Use Item")
                 try:
                     inp = int(input(">"))
                 except:
@@ -284,6 +284,40 @@ class Player:
                     else:
                         utils.p("You are too low on stamina!")
                 elif inp == 3:
+                    if self.mp >= 15:
+                        while 1:
+                            for i in range(0, len(self.spells)):
+                                print(("%s.) " % str(i + 1)) + self.spells[i].name)
+                            utils.p("What spell would you like to use? Type 'exit' to quit.")
+                            inp = input(">")
+
+                            try:
+                                inp = int(inp)
+                            except:
+                                if inp.lower() == "exit": break
+                                
+
+                            try:
+                                spell = self.spells[inp - 1]
+                                dmg = round((spell.dmg * (self.magic + 1) * random.uniform(.5, 1.5)))
+                                accuracy = random.randint(0, 256)
+                                utils.p(spell.msg)
+                                if accuracy > spell.accur:
+                                    utils.p("You missed your attack!")
+                                    break
+                                else:
+                                    enemy.hp -= dmg
+
+                                    utils.p("You hit your foe for " + str(dmg) + " damage.")
+                                    self.mp -= spell.mp
+                                    turn = 0
+                                    break
+                            except:
+                                utils.p("Please type a valid number.")
+                        break
+                    else:
+                        utils.p("You are too low on Mana!")
+                elif inp == 4:
                     while 1:
                         for i in range(0, len(self.inventory)):
                             print(("%s.) " % str(i + 1)) + self.inventory[i].name)
@@ -306,6 +340,7 @@ class Player:
                 utils.p("Defeated the %s!" %enemy.name)
                 utils.p("Gained %s experience!" %enemy.exp)
                 self.exp += enemy.exp
+                self.levelUp()
                 break
             elif turn == 0:
                 enemy.attack(turn)

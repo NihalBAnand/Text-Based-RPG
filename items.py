@@ -25,3 +25,13 @@ class GuildCard(Item):
     def get(self):
         p(self.msg)
         player.inventory.append(self)
+
+class Spellbook(Item):
+    def __init__(self):
+        super().__init__(False, True, "Spellbook")
+    
+    def use(self):
+        print("Your spells:")
+        for i in range(len(player.spells)):
+            print("%s.) "%i + player.spells[i].name + " Mana cost: " + str(player.spells[i].mp) + " Damage: " + str(player.spells[i].dmg) + " Accuracy: " + str(round(round(player.spells[i].accur / 256, 3) * 100)) + "%")
+
